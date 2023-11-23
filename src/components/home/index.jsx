@@ -1,14 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Home(props){
 
-    function getMedicos(){
-        
-    }
-
     return (<div>
         <h1>Bem vindo a {props.nome}</h1>
-        <button onClick={getMedicos}>Médicos</button>
+        <Link to="/medicos">
+            <button>Médicos</button>
+        </Link>
 
     </div>);
 }

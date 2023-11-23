@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Home from './components/home/index.jsx'
-import Medicos from './components/medicos/index.jsx'
+import Rotas from './routes/index.jsx'
+import { Link } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Home nome="Minha Clínica"/>
-    <Medicos/>
+    <Rotas/>
   </React.StrictMode>,
 )

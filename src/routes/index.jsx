@@ -9,9 +9,9 @@ function Rotas() {
     return (<BrowserRouter>
         <Menu/>
         <Routes>
-            <Route exact path="/" element={<Home nome="Minha Clínica"/>} />
+            <Route exact path="/" element={<Home nome="Clínica PWEB"/>} />
             <Route path="/medicos" element={<Medicos/>} />
-            <Route path="/medicos/cadastrar" element={<CadastrarMedico/>}/>
+            <Route path="/cadastrar/medicos" element={<CadastrarMedico/>}/>
             <Route path="*" element={<Error/>}/>
         </Routes>
     </BrowserRouter>);

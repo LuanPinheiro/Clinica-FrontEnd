@@ -56,7 +56,6 @@ function Medicos(){
     }
 
     return (<div>
-            <Link to="/medicos/cadastrar">Cadastrar novo médico</Link>
             {listaMedicos.length != 0 ? listaMedicos.map((item) =><a key={item.crm}>{medicoListado(item)}</a>) : <h1>Não há médicos cadastrados no sistema</h1>}
             <ToastContainer/>
     </div>);

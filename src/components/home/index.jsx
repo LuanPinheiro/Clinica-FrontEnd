@@ -1,9 +1,10 @@
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../apis/firebase';
 import "./login.css"
 import { ToastContainer, toast } from 'react-toastify';
+import Consulta from '../consultas';
 
 function Home(props){
 
@@ -12,6 +13,7 @@ function Home(props){
     const [rotaCadastro, setRotaCadastro ] = useState("pacientes");
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const navigate = useNavigate();
 
     useEffect(()=>{
         async function checkLogin(){
@@ -32,12 +34,6 @@ function Home(props){
        },[]);
        
 
-    async function logout(){
-        await signOut(auth).then(()=>{
-            toast.success("Usuário desconectado");
-        });
-    }
-
     async function getUser(){
 
     }
@@ -49,6 +45,7 @@ function Home(props){
         .then(async ()=>{
             await getUser();
             toast.success("Logado com sucesso");
+            navigate("/medicos/consultas")
             
         })
         .catch((error)=>{
@@ -58,14 +55,7 @@ function Home(props){
     }
 
     function renderHome(){
-        console.log(rotaCadastro)
-        return (rotaCadastro == "medicos" ? <div><Link to={"/medicos"}>
-        <button className='button'>Médicos</button>
-        </Link>
-        
-        <Link to={"/medicos"}>
-            <button className='button'>Pacientes</button>
-        </Link></div> : <h1>Paciente Screen</h1>)
+        rotaCadastro == "medicos" ? navigate("/medicos/consultas") : navigate("/")
     }
 
     function RadioValue(e){
@@ -98,12 +88,7 @@ function Home(props){
     }
 
     return (<div>
-        {user && (<div>
-        <button onClick={()=> logout()} className='button'>Logout</button></div>)}
-
-        <h1>{user && <h1>Olá {rotaCadastro == "medicos" ? "médico " : "paciente "}{loggedUser.email}</h1>}Bem vindo a {props.nome}</h1>
-
-        {user ? renderHome() : loginScreen()}
+        {loginScreen()}
         <ToastContainer/>
     </div>);
 }

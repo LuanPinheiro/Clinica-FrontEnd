@@ -48,7 +48,7 @@ function Medicos(){
             <hr></hr>
             <h2>Nome: {item.nome}</h2>
             <h2>CRM: {item.crm}</h2>
-            <>Especialidade: {item.especialidade}</>
+            Especialidade: {item.especialidade}
             <br></br><br></br>
             <button onClick={() => deleteMedico(item.crm, item.nome)}>Desativar médico</button>
             <hr></hr>
@@ -56,8 +56,8 @@ function Medicos(){
     }
 
     return (<div>
-            {listaMedicos.length != 0 ? listaMedicos.map((item) =><a key={item.crm}>{medicoListado(item)}</a>) : <h1>Não há médicos cadastrados no sistema</h1>}
-            <ToastContainer/>
+        {listaMedicos.length != 0 ? listaMedicos.map((item) =><a key={item.crm}>{medicoListado(item)}</a>) : <h1>Não há médicos cadastrados no sistema</h1>}
+        <ToastContainer/>
     </div>);
 }
 export default Medicos

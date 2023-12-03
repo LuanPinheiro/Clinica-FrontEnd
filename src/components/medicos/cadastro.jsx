@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import "./cadastro.css"
 import API from "../../apis/API";
 import { ToastContainer, toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
-import auth from "../../apis/firebase";
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import { UserContext } from "../../contexts/user";
 
 function CadastrarMedico(){
     const [medico, setMedico] = useState({})
-    const navigate = useNavigate();
+    const {user, setUser} = useContext(UserContext);
     
     function onChange(e){
         let medicoAlterado = medico;
@@ -17,12 +15,12 @@ function CadastrarMedico(){
         setMedico(medicoAlterado);
     }
 
-    async function enviarMedicoApi(e){
+    async function enviarMedicoApi(){
         let url = "medico-ms/medicos"
         let data = {
             "dadosPessoais": {
                 "nome": medico.nome,
-                "email": medico.email,
+                "email": user.email,
                 "telefone": medico.telefone,
                 "endereco": {
                     "bairro": medico.bairro,
@@ -40,7 +38,6 @@ function CadastrarMedico(){
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, data)
             .then(()=>{
-                navigate("/")
                 return resolve();
             })
             .catch(async (error)=>{
@@ -49,8 +46,10 @@ function CadastrarMedico(){
         })
     }
 
-    function enviarMedico(e){
-        toast.promise(enviarMedicoApi(e),
+    async function enviarMedico(e){
+        e.preventDefault();
+
+        toast.promise(enviarMedicoApi(),
         {
             pending: "Por favor aguarde...",
             error: {
@@ -63,33 +62,14 @@ function CadastrarMedico(){
         })
     }
 
-    async function firebaseCreate(e){
-        e.preventDefault()
-        
-        await createUserWithEmailAndPassword(auth ,medico.email,medico.crm)
-        .then(()=> enviarMedico(e))
-        .catch((error)=> {
-            console.log("erro")
-            if(error.code==='auth/weak-password'){
-                toast.error('Senha Fraca');
-            }else if(error.code==='auth/email-already-in-use'){
-                toast.error('Email já em uso');
-            }
-        });
-    }
-
-    
-
     return (<div>
-    <div className="testboxcadastro">
+    <div className="boxcadastro">
         <h1>Cadastro de Médico</h1>
     
-        <form onSubmit={(e)=>firebaseCreate(e)}>
+        <form onSubmit={(e)=>enviarMedico(e)}>
         <hr></hr>
             {/* <label id="icon" for="name"><i class="icon-shield"></i></label> */}
             <input type="text" value={medico.nome} name="nome" placeholder="Nome" required onChange={(e)=>onChange(e)}/> *
-            <input type="text" value={medico.email} name="email" placeholder="Email" required onChange={(e)=>onChange(e)}/> *
-        <hr></hr>
             <input type="text" value={medico.crm} name="crm" placeholder="CRM" required onChange={(e)=>onChange(e)}/> *
             <input type="text" value={medico.telefone} name="telefone" placeholder="Telefone" required onChange={(e)=>onChange(e)}/> *
             <input type="text" value={medico.especialidade} name="especialidade" placeholder="Especialidade" required onChange={(e)=>onChange(e)}/> *
@@ -106,6 +86,7 @@ function CadastrarMedico(){
             <input type="text" value={medico.complemento} name="complemento" placeholder="Complemento" onChange={(e)=>onChange(e)}/>
             <input type="text" value={medico.numero} name="numero" placeholder="Numero" onChange={(e)=>onChange(e)}/>
 
+        <br></br>
         <br></br>
         <button type="submit" className="button">Cadastrar</button>
         </form>

@@ -1,21 +1,26 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import API from "../../apis/API"
 import { ToastContainer, toast } from "react-toastify"
-import auth from "../../apis/firebase"
-import { useNavigate } from "react-router-dom"
-import { signOut } from "firebase/auth"
+import { Link, useNavigate } from "react-router-dom"
+import { UserContext } from "../../contexts/user"
 
 function Consulta(){
 
     const [consultas, setConsultas] = useState([])
+    //const {email, setEmail} = useContext(UserEmailContext);
     const navigate = useNavigate();
 
     useEffect(()=>{
-       API.get("consulta-ms/consultas")
-       .then((response) => {
-        let consultasApi = response.data;
-        setConsultas(consultasApi);
-       }) 
+        async function getConsultas(){
+            API.get(`consulta-ms/consultas?crm=${"12345678"}`)
+            .then((response) => {
+                let consultasApi = response.data;
+                setConsultas(consultasApi.content);
+            }).catch((error)=>{
+                toast.error("Erro ao listar as consultas, tente novamente mais tarde")
+            }) 
+        }
+        getConsultas();
     },[])
 
     async function desmarcarConsultaApi(consulta){
@@ -65,15 +70,11 @@ function Consulta(){
         </div>)
     }
 
-    async function logout(){
-        await signOut(auth).then(()=>{
-            navigate("/")
-        });
-    }
-
+    // 
     return (<div>
-        <button onClick={()=> logout()} className='button'>Logout</button>
-        {consultas.length != 0 ? consultas.map((consulta) =><a key={consulta.cpf+consulta.crm+consulta.data}>{consultaListada(consulta)}</a>) : <h1>Não há consultas cadastradas no sistema</h1>}
+        <h1>Menu de Consultas</h1>
+        <Link to="consultas/marcar"><button className="button">Marcar</button></Link>
+        {consultas.length != 0 ? consultas.map((consulta) =><a key={consulta.cpf+consulta.crm+consulta.data}>{consultaListada(consulta)}</a>) : <h1>Não há consultas cadastradas para você</h1>}
         <ToastContainer/>
     </div>)
 }

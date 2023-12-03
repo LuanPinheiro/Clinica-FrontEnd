@@ -11,11 +11,10 @@ function Cadastro(){
 
     async function firebaseCreate(e){
         e.preventDefault()
-        console.log("Aqui");
+        
         await createUserWithEmailAndPassword(auth ,email, senha)
         .then(()=> toast.success("Conta criada com sucesso"))
         .catch((error)=> {
-            console.log("erro")
             if(error.code==='auth/weak-password'){
                 toast.error('Senha Fraca');
             }else if(error.code==='auth/email-already-in-use'){
@@ -31,8 +30,8 @@ function Cadastro(){
             <form onSubmit={(e)=>firebaseCreate(e)}>
             <hr></hr>
                 {/* <label id="icon" for="name"><i class="icon-shield"></i></label> */}
-                <input type="text" value={email} name="email" placeholder="Email" required onChange={(e)=>setEmail(e.target.value)}/> *
-                <input type="text" value={senha} name="senha" placeholder="Senha" required onChange={(e)=>setSenha(e.target.value)}/> *
+                <input type="email" value={email} name="email" placeholder="Email" required onChange={(e)=>setEmail(e.target.value)}/> *
+                <input type="password" value={senha} name="senha" placeholder="Senha" required onChange={(e)=>setSenha(e.target.value)}/> *
 
             <br></br>
             <br></br>

@@ -24,9 +24,9 @@ function EditarMedico(){
                 "numero": medico.numero ?? medicoOriginal.endereco.numero,
                 "uf": medico.uf ?? medicoOriginal.endereco.uf
             },
-            "crm": medico.crm ?? medicoOriginal.crm,
+            "crm": medicoOriginal.crm,
         }
-        console.log(data)
+        
         return new Promise(async (resolve, reject)=>{
             return await API.put(url, data)
             .then(()=>{
@@ -69,7 +69,6 @@ function EditarMedico(){
             <hr></hr>
                 {/* <label id="icon" for="name"><i class="icon-shield"></i></label> */}
                 <input type="text" value={medico.nome} name="nome" placeholder="Nome" required defaultValue={medicoOriginal.nome} onChange={(e)=>onChange(e)}/> *
-                <input type="text" value={medico.crm} name="crm" placeholder="CRM" required defaultValue={medicoOriginal.crm} onChange={(e)=>onChange(e)}/> *
                 <input type="text" value={medico.telefone} name="telefone" placeholder="Telefone" required defaultValue={medicoOriginal.telefone} onChange={(e)=>onChange(e)}/> *
             
             <br></br>

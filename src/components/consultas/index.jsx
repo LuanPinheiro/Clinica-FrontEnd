@@ -1,80 +1,48 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import API from "../../apis/API"
 import { ToastContainer, toast } from "react-toastify"
-import { Link, useNavigate } from "react-router-dom"
-import { UserContext } from "../../contexts/user"
+import { useLocation, useNavigate } from "react-router-dom"
 
 function Consulta(){
 
+    const location = useLocation();
     const [consultas, setConsultas] = useState([])
-    //const {email, setEmail} = useContext(UserEmailContext);
     const navigate = useNavigate();
 
     useEffect(()=>{
         async function getConsultas(){
-            API.get(`consulta-ms/consultas?crm=${"12345678"}`)
+            let url = `consulta-ms/consultas?${location.state.tipo}=${location.state.id}`;
+            API.get(url)
             .then((response) => {
                 let consultasApi = response.data;
                 setConsultas(consultasApi.content);
-            }).catch((error)=>{
-                toast.error("Erro ao listar as consultas, tente novamente mais tarde")
-            }) 
+            })
         }
         getConsultas();
     },[])
 
-    async function desmarcarConsultaApi(consulta){
-        let url = `consulta-ms/consultas`
-        const response = await API.delete(url, {
-            data: {
-                "crmMedico": consulta.medico,
-                "cpfPaciente": consulta.paciente,
-                "data": consulta.data,
-                "hora": consulta.hora,
-                "motivo": "outros"
-            }
-        });
-
-        if(response.status == 202){
-            for (let i = consultas.length - 1; i >= 0; i--) {
-                if (consultas[i].medico == consulta.medico && 
-                    consultas[i].paciente == consulta.paciente &&
-                    consultas[i].data == consulta.data) {
-                    consultas.splice(i, 1);
-                }
-            }
-            setConsultas([...consultas]);
-        }
-    }
-
-    function desmarcarConsulta(consulta){
-        toast.promise(desmarcarConsultaApi(consulta),
-        {
-            pending: "Por favor aguarde...",
-            error: "Erro ao desmarcar consulta, por favor tente novamente mais tarde",
-            success: `Consulta desmarcada com sucesso`
-        })
-    }
-
     function consultaListada(consulta){
         return (<div>
             <hr></hr>
-            <h2>Medico: {consulta.medico}</h2>
-            <h2>Paciente: {consulta.paciente}</h2>
+            {location.state.tipo == "cpf" ? <h2>Medico: {consulta.medico}</h2> : <h2>Paciente: {consulta.paciente}</h2>}
             Data: {consulta.data}
             <br></br>
             Hora: {consulta.hora}
             <br></br><br></br>
-            <button onClick={()=>desmarcarConsulta(consulta)}>Desmarcar consulta</button>
+            <button className="button" onClick={()=>navigate("/consultas/desmarcar", {state: {consulta}})}>Desmarcar</button>
             <hr></hr>
         </div>)
     }
 
-    // 
     return (<div>
         <h1>Menu de Consultas</h1>
-        <Link to="consultas/marcar"><button className="button">Marcar</button></Link>
-        {consultas.length != 0 ? consultas.map((consulta) =><a key={consulta.cpf+consulta.crm+consulta.data}>{consultaListada(consulta)}</a>) : <h1>Não há consultas cadastradas para você</h1>}
+        <button onClick={()=>navigate("/consultas/marcar", {state: {
+            tipobusca: location.state.tipo == "crm" ? "pacientes" : "medicos",
+            especialidade: location.state.tipo == "crm" ? location.state.especialidade : null,
+            tipo: location.state.tipo,
+            id: location.state.id,
+        }})} className="button">Marcar</button>
+        {consultas.length != 0 ? consultas.map((consulta) =><div key={consulta.cpf+consulta.crm+consulta.data}>{consultaListada(consulta)}</div>) : <h1>Não há consultas cadastradas para você</h1>}
         <ToastContainer/>
     </div>)
 }

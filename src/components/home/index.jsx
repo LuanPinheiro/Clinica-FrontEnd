@@ -43,7 +43,12 @@ function Home(){
             navigate(`/${rotaLogin}`);
         })
         .catch((error)=>{
-            toast.error(error.message);
+            if(error.code==='auth/invalid-login-credentials'){
+                toast.error("Email ou senha inválida")
+            }
+            else{
+                toast.error(error.message);
+            }
         })
         
     }
@@ -70,7 +75,7 @@ function Home(){
                 <label htmlFor="radioTwo" className="radio">Médico</label>
             </div>
             <hr></hr>
-            <input type="text" value={user.email} name="email" id="email" placeholder="Email" required onChange={(e)=>onChange(e)}/>
+            <input type="email" value={user.email} name="email" id="email" placeholder="Email" required onChange={(e)=>onChange(e)}/>
             <input type="password" value={user.senha} name="senha" id="senha" placeholder="Senha" required onChange={(e)=>onChange(e)}/>
             <br></br>
             <button className="button" type='submit'>Entrar</button>

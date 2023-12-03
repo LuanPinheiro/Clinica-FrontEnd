@@ -62,7 +62,7 @@ function CadastrarMedico(){
         })
     }
 
-    return (<div>
+    return (
     <div className="boxcadastro">
         <h1>Cadastro de Médico</h1>
     
@@ -71,7 +71,7 @@ function CadastrarMedico(){
             {/* <label id="icon" for="name"><i class="icon-shield"></i></label> */}
             <input type="text" value={medico.nome} name="nome" placeholder="Nome" required onChange={(e)=>onChange(e)}/> *
             <input type="text" value={medico.crm} name="crm" placeholder="CRM" required onChange={(e)=>onChange(e)}/> *
-            <input type="text" value={medico.telefone} name="telefone" placeholder="Telefone" required onChange={(e)=>onChange(e)}/> *
+            <input type="tel" value={medico.telefone} name="telefone" placeholder="Telefone" required onChange={(e)=>onChange(e)}/> *
             <input type="text" value={medico.especialidade} name="especialidade" placeholder="Especialidade" required onChange={(e)=>onChange(e)}/> *
 
         <br></br>
@@ -91,7 +91,6 @@ function CadastrarMedico(){
         <button type="submit" className="button">Cadastrar</button>
         </form>
         <ToastContainer/>
-  </div>
   </div>)
 }
 export default CadastrarMedico

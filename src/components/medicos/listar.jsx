@@ -50,13 +50,17 @@ function ListarMedicos(){
     function medicoListado(item){
         return (<div>
             <hr></hr>
-            <h2>Nome: {item.nome}</h2>
             <h2>CRM: {item.crm}</h2>
+            <h2>Nome: {item.nome}</h2>
             Especialidade: {item.especialidade}
 
             <br></br>
-            <Link to="/consultas"><button className='button'>Consultas</button></Link>
-            <button className='button' onClick={()=> navigate("/medicos/editar", {state: item})}>Editar</button>
+            <button className='button' onClick={() => navigate("/consultas", {state: {
+                tipo: "crm",
+                id: item.crm,
+                especialidade: item.especialidade
+            }})}>Consultas</button>
+            <button className='button' onClick={() => navigate("/medicos/editar", {state: item})}>Editar</button>
             <button className='button' onClick={() => deleteMedico(item.crm, item.nome)}>Desativar</button>
             <hr></hr>
         </div>)

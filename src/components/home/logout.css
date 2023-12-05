@@ -1,0 +1,36 @@
+button.button-logout {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    padding: 2px 80px 0px 18px;
+    margin: 10px 8px 20px 0px;
+    display: flow-root;
+    float: none;
+    text-decoration: none;
+    width: 50px; height: 27px; 
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    border-radius: 5px; 
+    background-color: red; 
+    -webkit-box-shadow: 0 3px rgba(171, 28, 48, 0.75); 
+    -moz-box-shadow: 0 3px rgba(171, 28, 48, 0.75); 
+    box-shadow: 0 3px rgba(171, 28, 48, 0.75);
+    transition: all 0.1s linear 0s; 
+    top: 5px;
+    right: 10px;
+    position: fixed;
+  }
+  
+  button.button-logout:hover {
+    top: 3px;
+    background-color:red;
+    -webkit-box-shadow: none; 
+    -moz-box-shadow: none; 
+    box-shadow: none;
+    
+  }
+
+  .logout-img{
+    max-width: 100%;
+    max-height: 100%;
+  }

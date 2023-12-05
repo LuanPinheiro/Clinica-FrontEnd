@@ -12,7 +12,7 @@ function ListarMedicos(){
 
     useEffect(() => {
         async function getMedicos(){
-            let url = `medico-ms/medicos/email?page=0&email=${localStorage.getItem("userEmail")}`
+            let url = `medico-ms/medicos/email?page=0&email=${sessionStorage.getItem("userEmail")}`
             API.get(url).then((response) => {
                 let medicos = response.data;
                 setListaMedicos(medicos.content);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./cadastro.css"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-function Cadastro(){
+function Cadastro(props){
 
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -24,6 +24,8 @@ function Cadastro(){
     }
 
     return (<div>
+        <h1>Bem vindo a {props.nome}</h1>
+        <br></br>
         <div className="boxcadastro">
             <h1>Cadastro</h1>
         

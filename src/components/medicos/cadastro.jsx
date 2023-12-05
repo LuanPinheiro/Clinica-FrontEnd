@@ -1,10 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "./cadastro.css"
 import API from "../../apis/API";
 import { ToastContainer, toast } from "react-toastify";
 
 function CadastrarMedico(){
     const [medico, setMedico] = useState({})
+
+    useEffect(()=> {
+        setMedico({})
+    }, [])
     
     function onChange(e){
         let medicoAlterado = medico;
@@ -20,7 +24,7 @@ function CadastrarMedico(){
             "especialidade": medico.especialidade,
             "dadosPessoais": {
                 "nome": medico.nome,
-                "email": localStorage.getItem("userEmail"),
+                "email": sessionStorage.getItem("userEmail"),
                 "telefone": medico.telefone,
                 "endereco": {
                     "bairro": medico.bairro,
@@ -61,7 +65,7 @@ function CadastrarMedico(){
     }
 
     return (
-    <div className="boxcadastro">
+    <div className="boxcadastromedico">
         <h1>Cadastro de Médico</h1>
     
         <form onSubmit={(e)=>enviarMedico(e)}>
@@ -70,7 +74,14 @@ function CadastrarMedico(){
             <input type="text" value={medico.nome} name="nome" placeholder="Nome" required onChange={(e)=>onChange(e)}/> *
             <input type="text" value={medico.crm} name="crm" placeholder="CRM" required onChange={(e)=>onChange(e)}/> *
             <input type="tel" value={medico.telefone} name="telefone" placeholder="Telefone" required onChange={(e)=>onChange(e)}/> *
-            <input type="text" value={medico.especialidade} name="especialidade" placeholder="Especialidade" required onChange={(e)=>onChange(e)}/> *
+            <br></br><br></br>
+            <label>Especialidade:</label>
+            <select className="combobox" name="especialidade" value={medico.especialidade} onChange={(e)=>onChange(e)}>
+                <option value="Ortopedia">Ortopedia</option>
+                <option value="Cardiologia">Cardiologia</option>
+                <option value="Ginecologia">Ginecologia</option>
+                <option value="Dermatologia">Dermatologia</option>
+                </select>
 
         <br></br>
         <hr></hr>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./editar.css"
@@ -8,6 +8,10 @@ function EditarMedico(){
     const location = useLocation();
     const [medico, setMedico] = useState({})
     const medicoOriginal = location.state
+
+    useEffect(()=> {
+        setMedico({})
+    }, [])
 
     async function atualizarMedicoApi(){
         let url = `medico-ms/medicos`

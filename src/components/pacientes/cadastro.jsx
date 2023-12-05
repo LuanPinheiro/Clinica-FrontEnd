@@ -25,7 +25,7 @@ function CadastrarPaciente(){
             "cpf": paciente.cpf,
             "dadosPessoais": {
                 "nome": paciente.nome,
-                "email": localStorage.getItem("userEmail"),
+                "email": sessionStorage.getItem("userEmail"),
                 "telefone": paciente.telefone,
                 "endereco": {
                     "bairro": paciente.bairro,
@@ -38,6 +38,7 @@ function CadastrarPaciente(){
                 }
             }
         }
+        console.log(paciente)
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, data)
             .then(() =>{
@@ -74,7 +75,7 @@ function CadastrarPaciente(){
     }
 
     return (
-    <div className="boxcadastro">
+    <div className="boxcadastropaciente">
         <h1>Cadastro de Paciente</h1>
     
         <form onSubmit={(e)=>enviarPaciente(e)}>

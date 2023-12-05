@@ -4,28 +4,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../apis/firebase';
 import "./login.css"
 import { ToastContainer, toast } from 'react-toastify';
-import { UserContext } from '../../contexts/user';
 
-function Home(){
+function Home(props){
 
-    const [isLogged, setIsLogged]= useState(false);
-    const [loggedUser, setLoggedUser]=useState({});
     const [rotaLogin, setRotaLogin ] = useState("pacientes");
-    const {user, setUser} = useContext(UserContext);
+    const [user, setUser] = useState({})
     const navigate = useNavigate();
 
     useEffect(()=>{
+        setUser({})
         async function checkLogin(){
-            onAuthStateChanged(auth, (user)=>{
-            if(user){
-                setIsLogged(true);
-                setLoggedUser({
-                    email:user.email
-                })
-                localStorage.setItem("userEmail", user.email);
+            onAuthStateChanged(auth, (logged)=>{
+            if(logged){
+                sessionStorage.setItem("userEmail", user.email);
             }else{
-                setIsLogged(false);
-                setLoggedUser({});
+                setUser({});
             }
             })
         }
@@ -40,11 +33,12 @@ function Home(){
             let usuario = user;
             usuario.senha = null;
             setUser(usuario);
-            localStorage.setItem("userEmail", user.email);
+            sessionStorage.setItem("userEmail", user.email);
             toast.success("Logado com sucesso");
             navigate(`/${rotaLogin}`);
         })
         .catch((error)=>{
+            setUser({})
             if(error.code==='auth/invalid-login-credentials'){
                 toast.error("Email ou senha inválida")
             }
@@ -66,7 +60,10 @@ function Home(){
         setRotaLogin(e.target.value);
     }
 
-    return (<div className="loginbox">
+    return (<div>
+        <h1>Bem vindo a {props.nome}</h1>
+        <br></br>
+    <div className="loginbox">
         <h1>Login</h1>
             <form onSubmit={(e)=>tryLogin(e)}>
                 <hr></hr>
@@ -85,6 +82,7 @@ function Home(){
             <Link to={`/cadastrar`}><button className="button">Cadastrar</button></Link>
             </form>
             <ToastContainer/>
+        </div>
         </div>)
 }
 

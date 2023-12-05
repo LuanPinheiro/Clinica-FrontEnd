@@ -3,6 +3,7 @@ import API from '../../apis/API';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import "../home/card.css"
 
 function ListarPacientes(){
 
@@ -11,7 +12,7 @@ function ListarPacientes(){
     
     useEffect(() => {
         async function getPacientes(){
-            let url = `paciente-ms/pacientes/email?page=0&email=${localStorage.getItem("userEmail")}`
+            let url = `paciente-ms/pacientes/email?page=0&email=${sessionStorage.getItem("userEmail")}`
             API.get(url).then((response) => {
                 let pacientes = response.data;
                 setListaPacientes(pacientes.content);
@@ -44,23 +45,25 @@ function ListarPacientes(){
     }
 
     function pacienteListado(paciente){
-        return (<div>
-            <hr></hr>
-            <h2>CPF: {paciente.cpf}</h2>
-            <h2>Nome: {paciente.nome}</h2>
-            Telefone: {paciente.telefone}
-            <br></br>
-            <button className='button' onClick={() => navigate("/consultas", {state: {
-                tipo: "cpf",
-                id: paciente.cpf
-            }})}>Consultas</button>
-            <button className='button' onClick={() => navigate("/pacientes/editar", {state: paciente})}>Editar</button>
-            <button className='button' onClick={() => deletePaciente(paciente.cpf, paciente.nome)}>Desativar</button>
-            <hr></hr>
-        </div>)
+        return(
+            <div className="card">
+                <div className="card-content">
+                    <h2>Nome: {paciente.nome}</h2>
+                    <h2>Nome: {paciente.cpf}</h2>
+                    Telefone: {paciente.telefone}
+                    <br></br>
+                    <button className='button' onClick={() => navigate("/consultas", {state: {
+                        tipo: "cpf",
+                        id: paciente.cpf
+                    }})}>Consultas</button>
+                    <button className='button' onClick={() => navigate("/pacientes/editar", {state: paciente})}>Editar</button>
+                    <button className='button' onClick={() => deletePaciente(paciente.cpf, paciente.nome)}>Desativar</button>
+                </div>
+            </div>
+        )
     }
 
-    return (<div>
+    return (<div className="card-container">
         {listaPacientes.length != 0 ? listaPacientes.map((paciente) =><div key={paciente.cpf}>{pacienteListado(paciente)}</div>) : <h1>Não há pacientes cadastrados nessa conta</h1>}
         <ToastContainer/>
     </div>);

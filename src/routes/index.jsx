@@ -17,7 +17,7 @@ function Rotas() {
     return (<BrowserRouter>
         <Routes>
             <Route exact path="/" element={<Home nome="Clínica PWEB"/>}/>
-            <Route path="/cadastrar" element={<Cadastro/>}/>
+            <Route path="/cadastrar" element={<Cadastro nome="Clínica PWEB"/>}/>
             <Route path="/medicos" element={<Medicos/>}/>
             <Route path="/medicos/cadastrar" element={<CadastrarMedico/>}/>
             <Route path="/medicos/editar" element={<EditarMedico/>}/>

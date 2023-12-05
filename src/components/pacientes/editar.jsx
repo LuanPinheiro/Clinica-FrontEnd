@@ -62,7 +62,7 @@ function EditarPaciente(){
     }
 
     return (<div>
-        <div className="boxeditar">
+        <div className="boxeditarpaciente">
             <h1>Editar Paciente</h1>
         
             <form onSubmit={(e)=>atualizarPaciente(e)}>

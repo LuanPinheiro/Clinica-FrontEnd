@@ -15,6 +15,7 @@ function EditarMedico(){
         let data = {
             "nome": medico.nome ?? medicoOriginal.nome,
             "telefone": medico.telefone ?? medicoOriginal.telefone,
+            "crm": medicoOriginal.crm,
             "endereco": {
                 "bairro": medico.bairro ?? medicoOriginal.endereco.bairro,
                 "cep": medico.cep ?? medicoOriginal.endereco.cep,
@@ -23,8 +24,7 @@ function EditarMedico(){
                 "logradouro": medico.logradouro ?? medicoOriginal.endereco.logradouro,
                 "numero": medico.numero ?? medicoOriginal.endereco.numero,
                 "uf": medico.uf ?? medicoOriginal.endereco.uf
-            },
-            "crm": medicoOriginal.crm,
+            }
         }
         
         return new Promise(async (resolve, reject)=>{

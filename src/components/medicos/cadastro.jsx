@@ -1,12 +1,10 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import "./cadastro.css"
 import API from "../../apis/API";
 import { ToastContainer, toast } from "react-toastify";
-import { UserContext } from "../../contexts/user";
 
 function CadastrarMedico(){
     const [medico, setMedico] = useState({})
-    const {user, setUser} = useContext(UserContext);
     
     function onChange(e){
         let medicoAlterado = medico;
@@ -18,9 +16,11 @@ function CadastrarMedico(){
     async function enviarMedicoApi(){
         let url = "medico-ms/medicos"
         let data = {
+            "crm": medico.crm,
+            "especialidade": medico.especialidade,
             "dadosPessoais": {
                 "nome": medico.nome,
-                "email": user.email,
+                "email": localStorage.getItem("userEmail"),
                 "telefone": medico.telefone,
                 "endereco": {
                     "bairro": medico.bairro,
@@ -31,9 +31,7 @@ function CadastrarMedico(){
                     "numero": medico.numero,
                     "uf": medico.uf
                 }
-            },
-            "crm": medico.crm,
-            "especialidade": medico.especialidade
+            }
         }
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, data)

@@ -22,6 +22,7 @@ function Home(){
                 setLoggedUser({
                     email:user.email
                 })
+                localStorage.setItem("userEmail", user.email);
             }else{
                 setIsLogged(false);
                 setLoggedUser({});
@@ -39,6 +40,7 @@ function Home(){
             let usuario = user;
             usuario.senha = null;
             setUser(usuario);
+            localStorage.setItem("userEmail", user.email);
             toast.success("Logado com sucesso");
             navigate(`/${rotaLogin}`);
         })

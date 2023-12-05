@@ -1,9 +1,12 @@
-import ListarMedicos from "./listar";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/user";
+import ListarPacientes from "./listar";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../apis/firebase";
 import { signOut } from "firebase/auth";
 
-function Medicos(){
+function Pacientes(){
+    const {user, setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     async function logout(){
@@ -15,11 +18,11 @@ function Medicos(){
     return (
     <div>
         <button onClick={()=> logout()} className='button'>Logout</button>
-        <h1>Menu de Médicos</h1>
-        <Link to={"/medicos/cadastrar"}> <button className="button">+Médico</button> </Link>
-        {ListarMedicos()}
+        <h1>Menu de Pacientes</h1>
+        <Link to={"/pacientes/cadastrar"}> <button className="button">+Paciente</button> </Link>
+        {ListarPacientes()}
     </div>
     );
 }
 
-export default Medicos;
+export default Pacientes;

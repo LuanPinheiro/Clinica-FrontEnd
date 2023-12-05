@@ -9,6 +9,9 @@ import EditarMedico from '../components/medicos/editar';
 import MarcarConsulta from '../components/consultas/marcar';
 import MarcarForm from '../components/consultas/marcarform';
 import DesmarcarConsulta from '../components/consultas/desmarcar';
+import Pacientes from '../components/pacientes';
+import CadastrarPaciente from '../components/pacientes/cadastro';
+import EditarPaciente from '../components/pacientes/editar';
 
 function Rotas() {
     return (<BrowserRouter>
@@ -18,6 +21,9 @@ function Rotas() {
             <Route path="/medicos" element={<Medicos/>}/>
             <Route path="/medicos/cadastrar" element={<CadastrarMedico/>}/>
             <Route path="/medicos/editar" element={<EditarMedico/>}/>
+            <Route path="/pacientes" element={<Pacientes/>}/>
+            <Route path="/pacientes/cadastrar" element={<CadastrarPaciente/>}/>
+            <Route path="/pacientes/editar" element={<EditarPaciente/>}/>
             <Route path="/consultas" element={<Consulta/>}/>
             <Route path="/consultas/marcar" element={<MarcarConsulta/>}/>
             <Route path="/consultas/desmarcar" element={<DesmarcarConsulta/>}/>

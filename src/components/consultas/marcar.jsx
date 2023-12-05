@@ -28,9 +28,9 @@ function MarcarConsulta(){
             {campoEspecifico}: {item[campoEspecifico.toLowerCase()]}
             <br></br>
             <button onClick={()=> navigate("/consultas/marcar/form", {state: {
-                "crm": location.state.tipo == "crm" ? location.state.id : item[crmCpf],
-                "cpf": location.state.tipo == "cpf" ? location.state.id : item[crmCpf],
-                "especialidade": location.state.tipo == "crm" ? location.state.especialidade : item[crmCpf]
+                "crm": location.state.tipo == "crm" ? location.state.id : item[crmCpf.toLowerCase()],
+                "cpf": location.state.tipo == "cpf" ? location.state.id : item[crmCpf.toLowerCase()],
+                "especialidade": location.state.tipo == "crm" ? location.state.especialidade : item.especialidade
             }})} className="button">Selecionar</button>
         </div>)
     }

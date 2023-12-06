@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import API from "../../apis/API"
 import { ToastContainer, toast } from "react-toastify"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { ConsultaInfoContext } from "../../contexts/consultaInfo";
+import "../pacientes/backButton.css";
 
 function Consulta(){
 
-    const location = useLocation();
+    const {consultaInfo, setConsultaInfo} = useContext(ConsultaInfoContext);
     const [consultas, setConsultas] = useState([])
     const navigate = useNavigate();
 
     useEffect(()=>{
         async function getConsultas(){
-            let url = `consulta-ms/consultas?${location.state.tipo}=${location.state.id}`;
+            let url = `consulta-ms/consultas?${consultaInfo.tipo}=${consultaInfo.id}`;
             API.get(url)
             .then((response) => {
                 let consultasApi = response.data;
@@ -25,7 +27,7 @@ function Consulta(){
         return(
             <div className="card">
                 <div className="card-content">
-                    {location.state.tipo == "cpf" ? <h2>Medico: {consulta.medico}</h2> : <h2>Paciente: {consulta.paciente}</h2>}
+                    {consultaInfo.tipo == "cpf" ? <h2>Medico: {consulta.medico}</h2> : <h2>Paciente: {consulta.paciente}</h2>}
                     <h3>Data: {consulta.data}</h3>
                     <h3>Data: {consulta.hora}</h3>
                     <br></br>
@@ -36,12 +38,13 @@ function Consulta(){
     }
 
     return (<div>
+        <button onClick={()=> navigate(`/${consultaInfo.tipo == "cpf" ? "pacientes" : "medicos"}`)} className='button-back'>Voltar</button>
         <h1>Menu de Consultas</h1>
         <button onClick={()=>navigate("/consultas/marcar", {state: {
-            tipobusca: location.state.tipo == "crm" ? "pacientes" : "medicos",
-            especialidade: location.state.tipo == "crm" ? location.state.especialidade : null,
-            tipo: location.state.tipo,
-            id: location.state.id,
+            tipobusca: consultaInfo.tipo == "crm" ? "pacientes" : "medicos",
+            especialidade: consultaInfo.tipo == "crm" ? consultaInfo.especialidade : null,
+            tipo: consultaInfo.tipo,
+            id: consultaInfo.id,
         }})} className="button-add">Marcar</button>
 
         <div className="card-container">

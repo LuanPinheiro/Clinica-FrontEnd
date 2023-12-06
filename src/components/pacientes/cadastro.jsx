@@ -3,6 +3,7 @@ import "./cadastro.css"
 import API from "../../apis/API";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "./backButton.css"
 
 function CadastrarPaciente(){
     const [paciente, setPaciente] = useState({});
@@ -38,14 +39,14 @@ function CadastrarPaciente(){
                 }
             }
         }
-        console.log(paciente)
+        
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, data)
             .then(() =>{
                 setTimeout(()=>{
                     navigate("/pacientes");
-                }, 4500);
-                toast.loading("Aguarde um pouco")
+                }, 4000);
+                toast.loading("Aguarde um pouco...");
                 return resolve();
             })
             .catch(async (error)=>{
@@ -74,7 +75,8 @@ function CadastrarPaciente(){
         })
     }
 
-    return (
+    return (<div>
+    <button onClick={()=> navigate("/pacientes")} className='button-back'>Voltar</button>
     <div className="boxcadastropaciente">
         <h1>Cadastro de Paciente</h1>
     
@@ -102,6 +104,7 @@ function CadastrarPaciente(){
         <button type="submit" className="button">Cadastrar</button>
         </form>
         <ToastContainer/>
+  </div>
   </div>)
 }
 export default CadastrarPaciente

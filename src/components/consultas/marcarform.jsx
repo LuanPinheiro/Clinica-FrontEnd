@@ -1,15 +1,19 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./marcarform.css"
-import { useState } from "react";
+import { useContext, useState } from "react";
 import API from "../../apis/API";
 import "../home/login.css"
+import "../pacientes/backButton.css"
+import { ConsultaInfoContext } from "../../contexts/consultaInfo";
 
 function MarcarForm(){
 
     const location = useLocation();
-    const [data, setData] = useState("")
-    const [hora, setHora] = useState("07:00")
+    const [data, setData] = useState("");
+    const [hora, setHora] = useState("07:00");
+    const {consultaInfo, setConsultaInfo} = useContext(ConsultaInfoContext);
+    const navigate = useNavigate();
 
     async function marcarConsultaApi(){
         let url = "consulta-ms/consultas"
@@ -24,6 +28,10 @@ function MarcarForm(){
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, dados)
             .then(()=>{
+                setTimeout(()=>{
+                    navigate("/consultas");
+                }, 4000);
+                toast.loading("Aguarde um pouco...");
                 return resolve();
             })
             .catch(async (error)=>{
@@ -49,6 +57,12 @@ function MarcarForm(){
     }
 
     return (<div>
+        <button onClick={()=> navigate("/consultas/marcar", {state: {
+            tipobusca: consultaInfo.tipo == "crm" ? "pacientes" : "medicos",
+            especialidade: consultaInfo.tipo == "crm" ? consultaInfo.especialidade : null,
+            tipo: consultaInfo.tipo,
+            id: consultaInfo.id,
+        }})} className='button-back'>Voltar</button>
         <div className="marcarformbox">
             <h1>Marcação de consulta</h1>
         

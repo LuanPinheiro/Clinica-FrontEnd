@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./editar.css"
+import "./backButton.css"
 import API from "../../apis/API";
 
 function EditarPaciente(){
     const location = useLocation();
-    const [paciente, setPaciente] = useState({})
-    const pacienteOriginal = location.state
+    const [paciente, setPaciente] = useState({});
+    const pacienteOriginal = location.state;
+    const navigate = useNavigate();
 
     async function atualizarPacienteApi(){
         let url = `paciente-ms/pacientes`
@@ -30,6 +32,10 @@ function EditarPaciente(){
         return new Promise(async (resolve, reject)=>{
             return await API.put(url, data)
             .then(()=>{
+                setTimeout(()=>{
+                    navigate("/pacientes");
+                }, 4000);
+                toast.loading("Aguarde um pouco...");
                 return resolve();
             })
             .catch(async (error)=>{
@@ -62,6 +68,7 @@ function EditarPaciente(){
     }
 
     return (<div>
+        <button onClick={()=> navigate("/pacientes")} className='button-back'>Voltar</button>
         <div className="boxeditarpaciente">
             <h1>Editar Paciente</h1>
         

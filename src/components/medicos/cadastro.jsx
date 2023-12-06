@@ -2,9 +2,12 @@ import { useEffect, useState } from "react"
 import "./cadastro.css"
 import API from "../../apis/API";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import "../pacientes/backButton.css";
 
 function CadastrarMedico(){
     const [medico, setMedico] = useState({})
+    const navigate = useNavigate();
 
     useEffect(()=> {
         setMedico({})
@@ -40,6 +43,10 @@ function CadastrarMedico(){
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, data)
             .then(()=>{
+                setTimeout(()=>{
+                    navigate("/medicos");
+                }, 4000);
+                toast.loading("Aguarde um pouco...");
                 return resolve();
             })
             .catch(async (error)=>{
@@ -64,7 +71,8 @@ function CadastrarMedico(){
         })
     }
 
-    return (
+    return (<div>
+    <button onClick={()=> navigate("/medicos")} className='button-back'>Voltar</button>
     <div className="boxcadastromedico">
         <h1>Cadastro de Médico</h1>
     
@@ -100,6 +108,7 @@ function CadastrarMedico(){
         <button type="submit" className="button">Cadastrar</button>
         </form>
         <ToastContainer/>
+  </div>
   </div>)
 }
 export default CadastrarMedico

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import API from "../../apis/API";
+import "../pacientes/backButton.css"
 
 function MarcarConsulta(){
     const location = useLocation();
@@ -39,6 +40,7 @@ function MarcarConsulta(){
     }
 
     return (<div>
+        <button onClick={()=> navigate("/consultas")} className='button-back'>Voltar</button>
         <h1>Escolha um {location.state.tipobusca.slice(0, -1)}</h1>
         <div className="card-container">
         {registros.length != 0 ? registros.map((item) =><div key={item.crm || item.cpf}>{registroListado(item)}</div>) : <h1>Não há {location.state.tipobusca} cadastrados no sistema</h1>}

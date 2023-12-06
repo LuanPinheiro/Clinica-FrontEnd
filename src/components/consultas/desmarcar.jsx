@@ -1,14 +1,16 @@
-import { useState } from "react";
-import { useLocation } from "react-router-dom"
+import { useContext, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 import API from "../../apis/API";
 import "../home/login.css"
+import "../pacientes/backButton.css"
 
 function DesmarcarConsulta(){
 
     const location = useLocation();
     const consulta = location.state.consulta;
     const [motivo, setMotivo] = useState("medico_cancelou");
+    const navigate = useNavigate();
 
     async function desmarcarConsultaApi(){
         let url = "consulta-ms/consultas"
@@ -23,6 +25,10 @@ function DesmarcarConsulta(){
         return new Promise(async (resolve, reject)=>{
             return await API.delete(url, {data: dados})
             .then(()=>{
+                setTimeout(()=>{
+                    navigate("/consultas");
+                }, 4000);
+                toast.loading("Aguarde um pouco...");
                 return resolve();
             })
             .catch(async (error)=>{
@@ -48,6 +54,7 @@ function DesmarcarConsulta(){
     }
 
     return (<div>
+        <button onClick={()=> navigate("/consultas")} className='button-back'>Voltar</button>
         <div className="desmarcarformbox">
             <h1>Desmarcar consulta</h1>
 

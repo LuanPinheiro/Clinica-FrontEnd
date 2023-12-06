@@ -1,4 +1,4 @@
-button.button-logout {
+button.button-add {
     font-size: 14px;
     font-weight: 600;
     color: white;
@@ -11,19 +11,19 @@ button.button-logout {
     -webkit-border-radius: 5px; 
     -moz-border-radius: 5px; 
     border-radius: 5px; 
-    background-color: red; 
-    -webkit-box-shadow: 0 3px rgba(171, 28, 48, 0.75); 
-    -moz-box-shadow: 0 3px rgba(171, 28, 48, 0.75); 
-    box-shadow: 0 3px rgba(171, 28, 48, 0.75);
+    background-color: green; 
+    -webkit-box-shadow: 0 3px rgba(41, 121, 27, 0.75); 
+    -moz-box-shadow: 0 3px rgba(41, 121, 27, 0.75); 
+    box-shadow: 0 3px rgba(41, 121, 27, 0.75);
     transition: all 0.1s linear 0s; 
-    top: 5px;
+    top: 80px;
     right: 10px;
     position: fixed;
   }
   
-  button.button-logout:hover {
-    top: 8px;
-    background-color:red;
+  button.button-add:hover {
+    top: 83px;
+    background-color:green;
     -webkit-box-shadow: none; 
     -moz-box-shadow: none; 
     box-shadow: none;

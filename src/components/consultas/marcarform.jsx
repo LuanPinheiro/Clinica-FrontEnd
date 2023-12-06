@@ -3,6 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "./marcarform.css"
 import { useState } from "react";
 import API from "../../apis/API";
+import "../home/login.css"
 
 function MarcarForm(){
 
@@ -19,6 +20,7 @@ function MarcarForm(){
             "hora": hora,
             "especialidade": location.state.especialidade
         }
+        console.log(dados)
         return new Promise(async (resolve, reject)=>{
             return await API.post(url, dados)
             .then(()=>{
@@ -60,10 +62,10 @@ function MarcarForm(){
                 <input type="text" value={location.state.cpf} name="cpf" placeholder="CPF" readOnly={true}/>
                 <hr></hr>
                 <h3>Data da consulta</h3>
-                <input type="date" value={data} name="data" required onChange={(e)=>setData(e.target.value)}/>
+                <input type="date" className="combobox" value={data} name="data" required onChange={(e)=>setData(e.target.value)}/>
                 <br></br><br></br>
                 <h3>Hora da consulta</h3>
-                <select name="hour" value={hora} onChange={(e)=>setHora(e.target.value)}>
+                <select name="hour" className="combobox" value={hora} onChange={(e)=>setHora(e.target.value)}>
                 <option value="07:00">07:00</option>
                 <option value="08:00">08:00</option>
                 <option value="09:00">09:00</option>

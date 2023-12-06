@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 import API from "../../apis/API";
+import "../home/login.css"
 
 function DesmarcarConsulta(){
 
@@ -60,10 +61,10 @@ function DesmarcarConsulta(){
                 <input type="text" value={consulta.paciente} name="cpf" placeholder="CPF" readOnly={true}/>
                 <br></br><br></br>
                 <h3>Data da consulta</h3>
-                <input type="date" value={consulta.data} name="data" readOnly={true}/>
+                <input type="date" className="combobox" value={consulta.data} name="data" readOnly={true}/>
                 <br></br><br></br>
                 <h3>Hora da consulta</h3>
-                <select name="hour" value={consulta.hora.substring(0, consulta.hora.length -3)} readOnly={true} disabled={true}>
+                <select name="hour" className="combobox" value={consulta.hora.substring(0, consulta.hora.length -3)} readOnly={true} disabled={true}>
                 <option value="07:00">07:00</option>
                 <option value="08:00">08:00</option>
                 <option value="09:00">09:00</option>
@@ -79,7 +80,8 @@ function DesmarcarConsulta(){
                 </select>
 
                 <hr></hr>
-                <select name="motivo" value={motivo} onChange={(e)=>setMotivo(e.target.value)}>
+                <h3>Motivo do cancelamento</h3>
+                <select name="motivo" className="combobox" value={motivo} onChange={(e)=>setMotivo(e.target.value)}>
                 <option value="medico_cancelou">Médico cancelou</option>
                 <option value="paciente_desistiu">Paciente desistiu</option>
                 <option value="outros">Outros</option>

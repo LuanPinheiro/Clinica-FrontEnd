@@ -14,9 +14,9 @@ function Medicos(){
 
     return (
     <div>
-        <button onClick={()=> logout()} className='button'>Logout</button>
+        <button onClick={()=> logout()} className='button-logout'>Logout</button>
         <h1>Menu de Médicos</h1>
-        <Link to={"/medicos/cadastrar"}> <button className="button">+Médico</button> </Link>
+        <Link to={"/medicos/cadastrar"}> <button className="button-add">+Médico</button> </Link>
         {ListarMedicos()}
     </div>
     );

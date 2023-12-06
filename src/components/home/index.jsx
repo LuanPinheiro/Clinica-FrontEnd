@@ -12,7 +12,7 @@ function Home(props){
     const navigate = useNavigate();
 
     useEffect(()=>{
-        setUser({})
+        setUser({});
         async function checkLogin(){
             onAuthStateChanged(auth, (logged)=>{
             if(logged){

@@ -48,8 +48,8 @@ function ListarPacientes(){
         return(
             <div className="card">
                 <div className="card-content">
-                    <h2>Nome: {paciente.nome}</h2>
-                    <h2>Nome: {paciente.cpf}</h2>
+                    <h2>CPF: {paciente.cpf}</h2>
+                    <h3>Nome: {paciente.nome}</h3>
                     Telefone: {paciente.telefone}
                     <br></br>
                     <button className='button' onClick={() => navigate("/consultas", {state: {

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import auth from "../../apis/firebase";
 import { signOut } from "firebase/auth";
 import "../home/logout.css"
-import logoutIcon from "../../assets/logout.png";
+import "./addButton.css"
 
 function Pacientes(){
     const {user, setUser} = useContext(UserContext);
@@ -19,12 +19,9 @@ function Pacientes(){
 
     return (
     <div>
-        <button onClick={()=> logout()} className='button-logout'>
-            <img className="logout-img" src={logoutIcon}/>
-        </button>
-        
+        <button onClick={()=> logout()} className='button-logout'>Logout</button>
         <h1>Menu de Pacientes</h1>
-        <Link to={"/pacientes/cadastrar"}> <button className="button">+Paciente</button> </Link>
+        <Link to={"/pacientes/cadastrar"}> <button className="button-add">+Paciente</button> </Link>
         {ListarPacientes()}
     </div>
     );

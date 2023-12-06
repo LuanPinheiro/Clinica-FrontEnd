@@ -45,25 +45,26 @@ function ListarMedicos(){
     }
 
     function medicoListado(medico){
-        return (<div>
-            <hr></hr>
-            <h2>CRM: {medico.crm}</h2>
-            <h2>Nome: {medico.nome}</h2>
-            Especialidade: {medico.especialidade}
-
-            <br></br>
-            <button className='button' onClick={() => navigate("/consultas", {state: {
-                tipo: "crm",
-                id: medico.crm,
-                especialidade: medico.especialidade
-            }})}>Consultas</button>
-            <button className='button' onClick={() => navigate("/medicos/editar", {state: medico})}>Editar</button>
-            <button className='button' onClick={() => deleteMedico(medico.crm, medico.nome)}>Desativar</button>
-            <hr></hr>
-        </div>)
+        return(
+            <div className="card">
+                <div className="card-content">
+                    <h2>CRM: {medico.crm}</h2>
+                    <h3>Nome: {medico.nome}</h3>
+                    Especialidade: {medico.especialidade}
+                    <br></br>
+                    <button className='button' onClick={() => navigate("/consultas", {state: {
+                        tipo: "crm",
+                        id: medico.crm,
+                        especialidade: medico.especialidade
+                    }})}>Consultas</button>
+                    <button className='button' onClick={() => navigate("/medicos/editar", {state: medico})}>Editar</button>
+                    <button className='button' onClick={() => deleteMedico(medico.crm, medico.nome)}>Desativar</button>
+                </div>
+            </div>
+        );
     }
 
-    return (<div>
+    return (<div className="card-container">
         {listaMedicos.length != 0 ? listaMedicos.map((medico) =><div key={medico.crm}>{medicoListado(medico)}</div>) : <h1>Não há médicos cadastrados nessa conta</h1>}
         <ToastContainer/>
     </div>);

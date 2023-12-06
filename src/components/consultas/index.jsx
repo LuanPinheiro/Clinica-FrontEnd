@@ -41,7 +41,7 @@ function Consulta(){
         <button onClick={()=> navigate(`/${consultaInfo.tipo == "cpf" ? "pacientes" : "medicos"}`)} className='button-back'>Voltar</button>
         <h1>Menu de Consultas</h1>
         <button onClick={()=>navigate("/consultas/marcar", {state: {
-            tipobusca: consultaInfo.tipo == "crm" ? "pacientes" : "medicos",
+            tipoBusca: consultaInfo.tipo == "crm" ? "pacientes" : "medicos",
             especialidade: consultaInfo.tipo == "crm" ? consultaInfo.especialidade : null,
             tipo: consultaInfo.tipo,
             id: consultaInfo.id,
